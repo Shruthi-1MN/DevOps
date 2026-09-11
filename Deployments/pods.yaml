@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-server
+spec:
+  restartPolicy: Always  # Container restarts regardless of exit code
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    # If this container crashes or exits for any reason, it will be restarted
+    ports:
+      containerPort: 80
+
+# docker run -d nginx:1.14.2 --name nginx -p 80:80
+# pod is a specification of how to run a container
