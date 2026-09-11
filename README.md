@@ -33,7 +33,7 @@ Etcd
 controllers
 cloud controller manager
 
-Cons
+Pros
 * Cluster
 * Healing
 * Scaling
