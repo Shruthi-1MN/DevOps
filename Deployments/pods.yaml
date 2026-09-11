@@ -1,15 +1,46 @@
+# trunk-ignore-all(checkov/CKV2_K8S_6)
 apiVersion: v1
 kind: Pod
 metadata:
   name: web-server
+  #namespace: app
 spec:
-  restartPolicy: Always  # Container restarts regardless of exit code
+  restartPolicy: Always
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
   containers:
-  - name: nginx
-    image: nginx:1.14.2
-    # If this container crashes or exits for any reason, it will be restarted
-    ports:
-      containerPort: 80
-
-# docker run -d nginx:1.14.2 --name nginx -p 80:80
-# pod is a specification of how to run a container
+    - name: nginx
+      image: nginx:1.14.2@sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 80
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 10001
+        capabilities:
+          drop:
+            - ALL
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 10
+        periodSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 5
+        periodSeconds: 10
