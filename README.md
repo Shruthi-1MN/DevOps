@@ -39,6 +39,11 @@ Pros
 * Scaling
 * Enterprise support
 
+Service - 
+* Load balancing
+* Service discovery - tracking deployment by labels and selector not by IP address
+* Expose to world
+
 
 
 
