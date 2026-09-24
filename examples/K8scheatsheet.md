@@ -11,3 +11,18 @@ kubectl get pods
 
 minikube ssh
 
+kubectl apply -f service.yaml
+kubectl get svc -v=9
+
+how to get node ip
+minikube ip
+curl -L http://192.168.64.10:30007/demo
+
+kubectl edit svc python-django-sample-app
+
+
+ 
+
+
+
+
